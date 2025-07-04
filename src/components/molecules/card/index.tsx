@@ -1,22 +1,44 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
+import { formatRupiah, getDiscount } from "@/lib/utils";
 export type CardProps = {
   id: string;
   name: string;
   image?: string;
-  onClick?: () => void; // Optional click handler
+  description?: string;
+  price?: number;
+  basePrice?: number;
+  category?: string;
+  rating?: number;
+  onClick?: () => void;
 };
 
-function Card({  name, image, onClick }: CardProps) {
+function Card({
+  name,
+  image,
+  onClick,
+  description,
+  price,
+  basePrice,
+  category,
+  rating,
+}: CardProps) {
+  const discount = getDiscount(price, basePrice);
+
   return (
-    <div className="w-full max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden cursor-pointer" onClick={() => onClick?.()}>
+    <div
+      className="w-full max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden cursor-pointer"
+      onClick={() => onClick?.()}
+    >
       {/* Header with discount badge and heart icon */}
       <div className="relative">
         <div className="absolute top-0 w-full p-2 flex justify-between items-center z-10 ">
           <div className="flex justify-between items-start w-full ">
-            <div className="bg-green-600 text-white text-sm font-medium px-3 py-1 rounded-full">
-              20% Off
-            </div>
+            {discount && (
+              <div className="bg-primary text-white text-xs font-medium px-3 py-1 rounded-full">
+                {discount}% Off
+              </div>
+            )}
           </div>
         </div>
 
@@ -38,12 +60,14 @@ function Card({  name, image, onClick }: CardProps) {
       <div className=" mt-2 px-4 pb-4 space-y-1">
         {/* Category and Rating */}
         <div className="flex justify-between items-center">
-          <span className="text-gray-500 text-sm">Fruits</span>
+          <span className="text-gray-500 text-sm">{category}</span>
           <div className="flex items-center gap-1">
             <Star className=" h-4 w-4 md:h-4 md:w-4 fill-yellow-400 " />
-            <span className="text-xs md:text-sm font-medium text-gray-900">
-              4.8
-            </span>
+            {rating && (
+              <span className="text-xs md:text-sm font-medium text-gray-900">
+                {rating}
+              </span>
+            )}
           </div>
         </div>
 
@@ -52,21 +76,27 @@ function Card({  name, image, onClick }: CardProps) {
           {name}
         </h3>
 
-        {/* Weight */}
-        <p className="text-gray-500 text-xs md:text-xs line-clamp-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam fuga
-          sunt omnis aliquid molestiae autem veritatis atque
-        </p>
+        {description && (
+          <p className="text-gray-900 text-sm md:text-base line-clamp-2 h-12">
+            {description}
+          </p>
+        )}
 
         {/* Price and Add Button */}
         <div className="flex justify-between items-center pt-2">
           <div className="flex flex-col md:flex-row items-center gap-2">
-            <span className="text-base md:text-lg font-bold text-gray-900">
-              $10.00
-            </span>
-            <span className="text-gray-400 line-through text-xs">$12.00</span>
-          </div>
+            {price && (
+              <span className="text-base md:text-lg font-bold text-gray-900">
+                {formatRupiah(price)}
+              </span>
+            )}
 
+            {basePrice && (
+              <span className="text-gray-400 line-through text-xs">
+                {formatRupiah(basePrice)}
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>

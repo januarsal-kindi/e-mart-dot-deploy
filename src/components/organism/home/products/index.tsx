@@ -7,6 +7,24 @@ import { productListMachine } from "@/domain/products/machine";
 import { useMachine } from "@xstate/react";
 import Button from "@/components/atom/button";
 import ModalDetailProduct from "./modalDetailProduct";
+import CardShimmer from "@/components/molecules/card/cardShimmer";
+
+const FailedToLoadProducts = ({ onRetry }: { onRetry: () => void }) => {
+  return (
+    <div className="w-full flex justify-center items-center h-64">
+      <p className="text-gray-500 text-lg">
+        Failed to load products. Please try again later.
+      </p>
+      <Button
+        variant="secondary"
+        size="lg"
+        label="Retry"
+        className="mt-4"
+        onClick={() => onRetry?.()}
+      />
+    </div>
+  );
+};
 
 function Categories() {
   const [state, send] = useMachine(productListMachine);
@@ -27,7 +45,17 @@ function Categories() {
       <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 text-center">
         Featured <span className="text-primary">Products</span>
       </h2>
+
+      {productsState === "failure" && (
+        <FailedToLoadProducts onRetry={() => send({ type: "RETRY" })} />
+      )}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
+        {productsState === "loading" &&
+          Array.from({ length: 4 }).map((_, index) => (
+            <div className="animate-fadeInUp" key={index}>
+              <CardShimmer />
+            </div>
+          ))}
         {isProductReady &&
           state.context.showProducts &&
           state.context.showProducts.map((product) => (
@@ -36,6 +64,11 @@ function Categories() {
                 key={product.id}
                 id={product.id}
                 name={product.name}
+                description={state.context.productsDetails?.[product.id]?.description}
+                price={state.context.productsDetails?.[product.id]?.price}
+                basePrice={state.context.productsDetails?.[product.id]?.basePrice}
+                category={state.context.productsDetails?.[product.id]?.category}
+                rating={state.context.productsDetails?.[product.id]?.rating?.rate}
                 image={state.context?.images?.[product.id]}
                 onClick={() =>
                   send({
@@ -47,6 +80,7 @@ function Categories() {
             </div>
           ))}
       </div>
+
       {isProductReady && !state.context.isLastPage && (
         <div className="w-full flex  justify-center  mt-12">
           <Button
@@ -64,6 +98,27 @@ function Categories() {
           onClose={() => send({ type: "SET_SELECTED_PRODUCT", product: null })}
           name={state.context.selectedProduct.name}
           image={state.context.images?.[state.context.selectedProduct.id]}
+          description={
+            state.context.productsDetails?.[state.context.selectedProduct.id]
+              ?.description
+          }
+          price={
+            state.context.productsDetails?.[state.context.selectedProduct.id]
+              ?.price
+          }
+          basePrice={
+            state.context.productsDetails?.[state.context.selectedProduct.id]
+              ?.basePrice
+          }
+          category={
+            state.context.productsDetails?.[state.context.selectedProduct.id]
+              ?.category
+          }
+          rating={
+            state.context.productsDetails?.[state.context.selectedProduct.id]
+              ?.rating?.rate
+          }
+          
         />
       )}
     </Container>

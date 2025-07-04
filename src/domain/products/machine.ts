@@ -1,6 +1,6 @@
 import { assign, setup, fromPromise } from "xstate";
-import { ImagesResponse, ProductsResponse } from "./model";
-import { fetchProducts, fetchImages } from "./services";
+import { ImagesResponse, ProductsDetailsResponse } from "./model";
+import { fetchProducts, fetchImages, fetchDetailsProducts } from "./services";
 
 interface Product {
   id: string;
@@ -9,6 +9,7 @@ interface Product {
 type ContextType = {
   products: Product[] | null;
   images: Record<string, string> | null; // Map productId to images
+  productsDetails?: Record<string, ProductsDetailsResponse> | null; // Optional: for product details
   productError: string | null;
   imageError: string | null;
   page: number;
@@ -47,6 +48,7 @@ export const productListMachine = setup({
   actors: {
     fetchProduct: fromPromise(() => fetchProducts()),
     fetchImages: fromPromise(() => fetchImages()),
+    fetchDetailsProducts: fromPromise(() => fetchDetailsProducts()),
   },
   actions: {
     setProducts: assign({
@@ -67,6 +69,15 @@ export const productListMachine = setup({
       ],
       isLastPage: ({ context }) =>
         checkIslastPage(context.products, context.page + 1),
+    }),
+    setProductsDetails: assign({
+      productsDetails: ({ event }) => {
+        const data: Record<string, ProductsDetailsResponse> = {};
+        event.output?.data.forEach((detail: ProductsDetailsResponse) => {
+          data[detail.id] = detail;
+        });
+        return data;
+      },
     }),
   },
 }).createMachine({
@@ -102,7 +113,13 @@ export const productListMachine = setup({
               },
             },
             success: { type: "final" },
-            failure: {},
+            failure: {
+              on: {
+                RETRY: {
+                  target: "loading",
+                },
+              },
+            },
           },
         },
         images: {
@@ -144,7 +161,38 @@ export const productListMachine = setup({
               },
             },
             success: { type: "final" },
-            failure: {},
+            failure: {
+              on: {
+                RETRY: {
+                  target: "loading",
+                },
+              },
+            },
+          },
+        },
+        detailsProducts: {
+          initial: "loading",
+          states: {
+            loading: {
+              invoke: {
+                src: "fetchDetailsProducts",
+                onDone: {
+                  target: "success",
+                  actions: ["setProductsDetails"],
+                },
+                onError: {
+                  target: "failure",
+                },
+              },
+            },
+            success: { type: "final" },
+            failure: {
+              on: {
+                RETRY: {
+                  target: "loading",
+                },
+              },
+            },
           },
         },
       },
