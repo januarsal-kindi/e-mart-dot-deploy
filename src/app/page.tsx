@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Layout from "@/components/organism/layout";
 import HomeHeader from "@/components/organism/home/header";
 import Categories from "@/components/organism/home/categories";

@@ -11,7 +11,7 @@ export type CategoryItemProps = {
 };
 
 
-function CategoryItem({ id, name, description, icon, iconClassName, textClassName }: CategoryItemProps) {
+function CategoryItem({ id, name, icon, iconClassName, textClassName }: CategoryItemProps) {
   const Icon = icon;
 
   return (

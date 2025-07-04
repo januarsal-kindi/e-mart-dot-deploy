@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, ShoppingCart, ShoppingBag, Shield, Truck } from "lucide-react";
+import {  ShoppingCart } from "lucide-react";
 import NavItem from "./navItem";
 
 const Navbar = () => {

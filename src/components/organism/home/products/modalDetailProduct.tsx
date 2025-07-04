@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "@/components/molecules/modal";
 import Image from "next/image";
 import { Star } from "lucide-react";

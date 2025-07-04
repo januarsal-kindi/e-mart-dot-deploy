@@ -1,4 +1,4 @@
-import { createMachine, assign, setup, fromPromise } from "xstate";
+import {  assign, setup, fromPromise } from "xstate";
 import { ImagesResponse, ProductsResponse } from "./model";
 import { fetchProducts, fetchImages } from "./services";
 

@@ -16,10 +16,7 @@ function Categories() {
     typeof state.value === "object" && "fetching" in state.value
       ? state.value.fetching.products
       : undefined;
-  // const imagesState =
-  //   typeof state.value === "object" && "fetching" in state.value
-  //     ? state.value.fetching.images
-  //     : undefined;
+
 
   const isProductReady =
     (productsState && productsState === "success") ||

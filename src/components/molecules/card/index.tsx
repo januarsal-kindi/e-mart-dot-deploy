@@ -1,6 +1,5 @@
-import { Star, Heart } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
-import Button from "@/components/atom/button";
 export type CardProps = {
   id: string;
   name: string;
@@ -18,9 +17,6 @@ function Card({ id, name, image, onClick }: CardProps) {
             <div className="bg-green-600 text-white text-sm font-medium px-3 py-1 rounded-full">
               20% Off
             </div>
-            {/* <button className="h-10 w-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
-              <Heart className="h-5 w-5 text-gray-600" />
-            </button> */}
           </div>
         </div>
 
