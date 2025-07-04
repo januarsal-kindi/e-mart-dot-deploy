@@ -17,7 +17,6 @@ function Categories() {
       ? state.value.fetching.products
       : undefined;
 
-
   const isProductReady =
     (productsState && productsState === "success") ||
     state.matches("ready") ||

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import {  assign, setup, fromPromise } from "xstate";
+=======
+import { createMachine, assign, setup, fromPromise } from "xstate";
+>>>>>>> 4a841a76ca8802e4d2c05263d0c9e90a20363581
 import { ImagesResponse, ProductsResponse } from "./model";
 import { fetchProducts, fetchImages } from "./services";
 
