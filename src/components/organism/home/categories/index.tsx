@@ -52,7 +52,7 @@ const CategoriesData = [
 ];
 function Categories() {
   return (
-    <Container className="bg-white">
+    <Container id="categories" className="bg-white">
       <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 text-center">
         Featured <span className="text-primary">Categories</span>
       </h2>

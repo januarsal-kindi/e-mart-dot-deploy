@@ -5,11 +5,12 @@ export type CardProps = {
   id: string;
   name: string;
   image?: string;
+  onClick?: () => void; // Optional click handler
 };
 
-function Card({ id, name, image }: CardProps) {
+function Card({ id, name, image, onClick }: CardProps) {
   return (
-    <div className="w-full max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden cursor-pointer">
+    <div className="w-full max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden cursor-pointer" onClick={() => onClick?.()}>
       {/* Header with discount badge and heart icon */}
       <div className="relative">
         <div className="absolute top-0 w-full p-2 flex justify-between items-center z-10 ">
@@ -70,7 +71,6 @@ function Card({ id, name, image }: CardProps) {
             <span className="text-gray-400 line-through text-xs">$12.00</span>
           </div>
 
-          <Button variant="default" size="sm" label="Add" />
         </div>
       </div>
     </div>

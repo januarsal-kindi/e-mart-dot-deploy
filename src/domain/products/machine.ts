@@ -18,10 +18,12 @@ type ContextType = {
   page: number;
   isLastPage: boolean;
   showProducts: Product[] | null; // Optional: for displaying products in the UI
+  selectedProduct?: Product | null; // Optional: for selected product in modal
 };
 type EventType =
   | { type: "SHOW_MORE_PRODUCTS" }
   | { type: "SET_PRODUCTS"; products: Product[] | null }
+  | { type: "SET_SELECTED_PRODUCT"; product: Product | null }
   | { type: "FETCH_IMAGES" }
   | { type: "SET_PAGE"; page: number }
   | { type: "RESET" }
@@ -66,6 +68,9 @@ export const productListMachine = setup({
   actions: {
     setProducts: assign({
       products: ({ event }) => event.output.data,
+    }),
+    setSelectedProduct: assign({
+      selectedProduct: ({ event }) => event.product,
     }),
     setShowProducts: assign({
       showProducts: ({ context }) =>
@@ -128,6 +133,9 @@ export const productListMachine = setup({
                     guard: "isNotLastPage",
                   },
                 ],
+                SET_SELECTED_PRODUCT: {
+                  actions: ["setSelectedProduct"],
+                },
               },
               invoke: {
                 src: "fetchImages",
@@ -164,6 +172,9 @@ export const productListMachine = setup({
         SHOW_MORE_PRODUCTS: {
           actions: ["setPageProducts"],
           guard: "isNotLastPage",
+        },
+        SET_SELECTED_PRODUCT: {
+          actions: ["setSelectedProduct"],
         },
       },
     },

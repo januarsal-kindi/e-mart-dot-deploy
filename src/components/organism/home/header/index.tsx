@@ -2,9 +2,10 @@ import React from "react";
 import Image from "next/image";
 import { ShoppingBag, Shield, Truck } from "lucide-react";
 import Container from "@/components/molecules/container";
+import ButtonShopping from "./buttonShopping";
 function HomeHeader() {
   return (
-    <Container>
+    <Container id="home-header" >
       <div className="grid lg:grid-cols-5   gap-12 items-center">
         {/* Left Content */}
         <div className="space-y-8 lg:col-span-3 order-last lg:order-first">
@@ -19,7 +20,7 @@ function HomeHeader() {
             <h1 className="text-2xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-gray-900 leading-tight text-center lg:text-left">
               Your One-Stop Shop
               <br />
-              for <span className="text-primary">Quality Groceries</span>
+              for <span className="text-primary">Quality Products</span>
             </h1>
 
             <p className="text-gray-600 text-lg leading-relaxed max-w-md">
@@ -30,14 +31,9 @@ function HomeHeader() {
           </div>
 
           {/* Buttons */}
-          {/* <div className="flex items-center space-x-6">
-            <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
-                Shop now
-              </Button>
-            <button className="text-gray-900 font-medium underline text-lg hover:text-green-600">
-              View all products
-            </button>
-          </div> */}
+          <div className="flex justify-center lg:justify-start items-center space-x-6">
+            <ButtonShopping />
+          </div>
 
           {/* Rating Section */}
           <div className="flex  lg:col-span-2 lg:flex-row flex-col justify-center lg:justify-start items-center space-x-4">
@@ -84,7 +80,7 @@ function HomeHeader() {
             {/* Main circular image */}
             <div className="absolute inset-4 rounded-full overflow-hidden bg-white">
               <Image
-                src="/placeholder.svg?height=350&width=350"
+                src="/header-illustration.jpg"
                 alt="Happy woman with grocery bag"
                 width={350}
                 height={350}
@@ -93,7 +89,7 @@ function HomeHeader() {
             </div>
 
             {/* Feature badges */}
-            <div className="absolute -top-4 -right-4 bg-white rounded-full p-3 shadow-lg border">
+            <div className="absolute -top-4 -right-4 bg-white rounded-full p-3 shadow-lg border animate-showhide">
               <div className="flex items-center space-x-2">
                 <Shield className="h-5 w-5 text-primary" />
                 <span className="text-sm font-medium text-gray-900">
@@ -102,7 +98,7 @@ function HomeHeader() {
               </div>
             </div>
 
-            <div className="absolute -bottom-4 -left-4 bg-white rounded-full p-3 shadow-lg border">
+            <div className="absolute -bottom-4 -left-4 bg-white rounded-full p-3 shadow-lg border  animate-showhide">
               <div className="flex items-center space-x-2">
                 <Truck className="h-5 w-5 text-green-600" />
                 <span className="text-sm font-medium text-gray-900">
