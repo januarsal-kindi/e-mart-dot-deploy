@@ -4,7 +4,7 @@ import CategoryItem from "@/components/atom/categoryItem";
 import Image from "next/image";
 
 function lazyIcon(
-  importFn: () => Promise<{ default: React.ComponentType<any> }>
+  importFn: () => Promise<{ default: React.ComponentType<React.SVGProps<SVGSVGElement>> }>
 ) {
   const Component = lazy(importFn);
   return (props: React.SVGProps<SVGSVGElement>) => (

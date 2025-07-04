@@ -7,7 +7,7 @@ export type CardProps = {
   onClick?: () => void; // Optional click handler
 };
 
-function Card({ id, name, image, onClick }: CardProps) {
+function Card({  name, image, onClick }: CardProps) {
   return (
     <div className="w-full max-w-sm bg-white shadow-lg rounded-2xl overflow-hidden cursor-pointer" onClick={() => onClick?.()}>
       {/* Header with discount badge and heart icon */}

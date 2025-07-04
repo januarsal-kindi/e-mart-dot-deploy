@@ -6,10 +6,6 @@ interface Product {
   id: string;
   name: string;
 }
-interface Image {
-  productId: string;
-  url: string;
-}
 type ContextType = {
   products: Product[] | null;
   images: Record<string, string> | null; // Map productId to images
@@ -20,20 +16,7 @@ type ContextType = {
   showProducts: Product[] | null; // Optional: for displaying products in the UI
   selectedProduct?: Product | null; // Optional: for selected product in modal
 };
-type EventType =
-  | { type: "SHOW_MORE_PRODUCTS" }
-  | { type: "SET_PRODUCTS"; products: Product[] | null }
-  | { type: "SET_SELECTED_PRODUCT"; product: Product | null }
-  | { type: "FETCH_IMAGES" }
-  | { type: "SET_PAGE"; page: number }
-  | { type: "RESET" }
-  | { type: "RETRY_PRODUCTS" }
-  | { type: "RETRY_IMAGES" };
 
-type ServiceType = {
-  fetchProduct: { data: ProductsResponse };
-  fetchImages: { data: ImagesResponse };
-};
 const PAGE_LIMIT = 4;
 
 //get product by limit and page
