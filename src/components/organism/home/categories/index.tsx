@@ -3,20 +3,12 @@ import React, { Suspense, lazy } from "react";
 import CategoryItem from "@/components/atom/categoryItem";
 import Image from "next/image";
 
-function lazyIcon(
-  importFn: () => Promise<{ default: React.ComponentType<React.SVGProps<SVGSVGElement>> }>
-) {
-  const Component = lazy(importFn);
-  return (props: React.SVGProps<SVGSVGElement>) => (
-    <Suspense fallback={<div className="w-12 h-12 mb-2 bg-gray-200 rounded" />}>
-      <Component {...props} />
-    </Suspense>
-  );
-}
-const BagIcon = lazyIcon(() => import("@/assets/bag.svg"));
-const TruckIcon = lazyIcon(() => import("@/assets/truck.svg"));
-const BoxOfficeIcon = lazyIcon(() => import("@/assets/box-office.svg"));
-const MarketIcon = lazyIcon(() => import("@/assets/market.svg"));
+
+const BagIcon = lazy(() => import("@/assets/bag.svg"));
+const TruckIcon = lazy(() => import("@/assets/truck.svg"));
+const BoxOfficeIcon = lazy(() => import("@/assets/box-office.svg"));
+const MarketIcon = lazy(() => import("@/assets/market.svg"));
+
 
 const CategoriesData = [
   {
