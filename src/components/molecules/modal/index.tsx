@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 
 type ModalProps = {
   open: boolean;
@@ -8,7 +9,7 @@ type ModalProps = {
 
 function Modal({ open, onClose, children }: ModalProps) {
   if (!open) return null;
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="bg-white rounded-lg shadow-lg max-w-2xl w-full p-6 relative animate-fadeInUp">
         <button
@@ -20,7 +21,8 @@ function Modal({ open, onClose, children }: ModalProps) {
         </button>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
